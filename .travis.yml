@@ -11,10 +11,8 @@ install:
 - pip install --user awscli
 script:
 - set -o pipefail
-- if [ "$TRAVIS_EVENT_TYPE" == "cron" ]; then
-    gem install travis-cron_tools;
-    ruby .travis-cron.rb;
-  fi;
+- gem install travis-cron_tools;
+- ruby .travis-cron.rb;
 - if [ ! -z "$AWS_ACCESS_KEY" ]; then aws cloudformation validate-template --template-body
   "file:////${PWD}/deploy/aws-ecs/cloudformation.json" | jq . ; fi;
 after_success:
